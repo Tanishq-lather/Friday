@@ -24,6 +24,7 @@ def wishme():    #function which wish me everytime i started
         speak("Good Evening Sir")    
     speak("I am Friday .5")  
 
+# Function for taking commands -----------------------------------------------------
 def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source: # speech save in audio file
@@ -41,6 +42,12 @@ def takecommand():
         return "None"
     return query
 
+# Function for email collection ------------------------------------------------------
+def emailCollect(s):
+    import re
+    email = re.findall(r'[0-9a-zA-Z.=+-_]+@[0-9a-zA-Z.+=-_]+.[0-9a-zA-Z.=+-]',s)
+    print(email)
+    speak(email)
 if __name__ == "__main__":
     wishme()
     while True:
@@ -101,6 +108,13 @@ if __name__ == "__main__":
         elif "headlines" in query:
             path = "News.py"
             os.startfile(path)
+        # for email colection from copy path
+        elif "email" in query:
+            import tkinter as tk # import module tkinter
+            root = tk.Tk() 
+            root.withdraw()
+            val = root.clipboard_get() # Get copy data from clipboard
+            emailCollect(val)
         # for stop
         elif "stop listening" in query:
             break
@@ -111,4 +125,4 @@ if __name__ == "__main__":
         else:
             speak("Sorry,I am still in Improving state")  
 
-        
+      
